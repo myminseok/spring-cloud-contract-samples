@@ -1,5 +1,6 @@
 package com.example;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,10 +22,13 @@ public class StatsController {
 			method= RequestMethod.POST,
 			consumes="application/json",
 			produces="application/json")
-	public StatsResponse check(@RequestBody StatsRequest request) {
+	public ResponseEntity<StatsResponse> check(@RequestBody StatsRequest request) {
+		if ("bizarre".equals(request.getName())) {
+			return ResponseEntity.status(409).body(new StatsResponse(0, "WAT?"));
+		}
 		int bottles = statsService.findBottlesByName(request.getName());
 		String text = String.format("Dear %s thanks for your interested in drinking beer", request.getName());
-		return new StatsResponse(bottles, text);
+		return ResponseEntity.ok(new StatsResponse(bottles, text));
 	}
 }
 

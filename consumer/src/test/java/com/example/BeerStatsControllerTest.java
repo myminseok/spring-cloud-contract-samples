@@ -51,5 +51,15 @@ public class BeerStatsControllerTest extends AbstractTest {
 				.andExpect(content().string("Dear marcin thanks for your interested in drinking beer. You've drank <5> beers"));
 		//remove::end[]
 	}
+
+	@Test public void should_work_for_contract_with_exception_status() throws Exception {
+		//remove::start[]
+		mockMvc.perform(MockMvcRequestBuilders.post("/stats")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(statsJson.write(new StatsRequest("bizarre")).getJson()))
+				.andExpect(status().isOk())
+				.andExpect(content().string("Boom!"));
+		//remove::end[]
+	}
 }
 

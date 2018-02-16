@@ -36,6 +36,9 @@ class BeerStatsController {
 						.contentType(MediaType.APPLICATION_JSON)
 						.body(new StatsRequest(statsRequest.getName())),
 				StatsResponse.class);
+		if (response.getStatusCode().is4xxClientError()) {
+			return "Boom!";
+		}
 		return response.getBody().getText() + ". You've drank <" + response.getBody().getQuantity() + "> beers";
 		//remove::end[return]
 	}
