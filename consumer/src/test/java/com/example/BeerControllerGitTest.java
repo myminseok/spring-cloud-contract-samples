@@ -34,7 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 // example of usage with fixed port
 //@AutoConfigureStubRunner(workOffline = true, ids = "com.example:beer-api-producer:+:stubs:8090")
 @AutoConfigureStubRunner(stubsMode = StubRunnerProperties.StubsMode.REMOTE,
-		repositoryRoot = "git://https://github.com/marcingrzejszczak/contract-git",
+		repositoryRoot = "git://git@github.com:marcingrzejszczak/contract-git.git",
 		ids = { "com.example:beer-api-producer-external:0.0.1-SNAPSHOT", "foo.bar:bazService:0.0.1-SNAPSHOT"})
 //remove::end[]
 @DirtiesContext
