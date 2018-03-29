@@ -52,10 +52,10 @@ dependencies {
 
 // remove::start[]
 contracts {
-	// We want to use the JAR with contracts with the following coordinates
-	// group id `com.example`, artifact id `beer-contracts`, LATEST version and NO classifier
+	// Since we want to use the SCM, we set the dependency of our project
+	// to be used with the repo with contracts
 	contractDependency {
-		stringNotation = "com.example:beer-contracts:${project.version}"
+		stringNotation = "${project.group}:${project.name}:${project.version}"
 	}
 	contractRepository {
 		repositoryUrl = "git://file://${System.getenv("ROOT")}/target/contract_git/"
@@ -69,6 +69,9 @@ contracts {
 		baseClassMapping(".*rest.*", "com.example.BeerRestBase")
 	}
 }
+
+publish.dependsOn("publishStubsToScm")
+publishToMavenLocal.dependsOn("publishStubsToScm")
 // remove::end[]
 
 test {
