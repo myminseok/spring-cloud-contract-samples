@@ -52,15 +52,19 @@ dependencies {
 
 // remove::start[]
 contracts {
-	// Since we want to use the SCM, we set the dependency of our project
-	// to be used with the repo with contracts
+	// We want to pick contracts from a Git repository
 	contractDependency {
 		stringNotation = "${project.group}:${project.name}:${project.version}"
 	}
+	/*
+	We reuse the contract dependency section to set up the path
+	to the folder that contains the contract definitions. In our case the
+	path will be /groupId/artifactId/version/contracts
+	 */
 	contractRepository {
 		repositoryUrl = "git://file://${System.getenv("ROOT")}/target/contract_git/"
 	}
-	// The JAR with contracts should be taken from Maven local
+	// The mode can't be classpath
 	contractsMode = "LOCAL"
 	// Base package for generated tests
 	basePackageForTests = "com.example"
@@ -70,6 +74,10 @@ contracts {
 	}
 }
 
+/*
+In this scenario we want to publish stubs to SCM whenever
+the `publish` task is executed
+*/
 publish.dependsOn("publishStubsToScm")
 publishToMavenLocal.dependsOn("publishStubsToScm")
 // remove::end[]
